@@ -41,7 +41,7 @@ const Admin = sequelize.define('admin', {
 const Course = sequelize.define('course', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     number: {type: DataTypes.INTEGER, unique:true},
-    name: {type: DataTypes.STRING, unique:true},
+    name: {type: DataTypes.STRING(500), unique:true},
     price: {type: DataTypes.STRING},
     date: {type: DataTypes.STRING},
 })
@@ -61,7 +61,7 @@ const Customer = sequelize.define('customer', {
 
 const Announ = sequelize.define('announ', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    name: {type: DataTypes.STRING},
+    name: {type: DataTypes.STRING(2000)},
 })
 
 const File = sequelize.define('file', {
