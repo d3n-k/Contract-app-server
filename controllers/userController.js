@@ -1,6 +1,5 @@
 const ApiError = require("../error/ApiError");
 const ActiveDirectory = require("activedirectory");
-const bcrypt = require("bcrypt");
 const { User } = require("../models/models");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
@@ -12,12 +11,19 @@ const config = {
   password: "!QAZ2wsx",
 };
 
-async function createAdm(password, login, role, res) {
-  console.log("Authenticated!");
-  const hashPassword = await bcrypt.hash(password, 5);
-  const user = await User.create({ login, role, password: hashPassword });
-  const token = generateJwt(user.id, user.login, user.role);
-  return res.json({ token });
+async function createAdm(login, role, res) {
+  const candidate = await User.findOne({ where: { login } });
+     if (candidate) {
+      console.log("Authenticated!");
+      const token = generateJwt(candidate.id, candidate.login, candidate.role);
+      return res.json({ token });
+     } else {
+      console.log("Authenticated!");
+      const user = await User.create({ login, role });
+      const token = generateJwt(user.id, user.login, user.role);
+      return res.json({ token });
+     }
+ 
 }
 
 const generateJwt = (id, login, role) => {
@@ -33,41 +39,19 @@ class UserController {
     if (!login || !password) {
       return next(ApiError.badRequest("Некорректный логин или пароль!"));
     }
-    const candidate = await User.findOne({ where: { login } });
-    if (candidate) {
-      return next(
-        ApiError.badRequest("Пользователь с таким логином уже существует")
-      );
-    }
     const ad = new ActiveDirectory(config);
     ad.authenticate(login, password, function (err, auth) {
       if (err) {
         console.log("ERROR: " + JSON.stringify(err));
-        //res.send("err");
         return next(ApiError.badRequest("Ошибка! Неправильный пароль..."));
       }
       if (auth) {
-        createAdm(password, login, role, res);
+        createAdm(login, role, res);
       } else {
         console.log("Authentication failed!");
         return next(ApiError.badRequest("Непредвиденная ошибка..."));
-        //res.send("failed");
       }
     });
-  }
-
-  async login(req, res, next) {
-    const { login, password } = req.body;
-    const user = await User.findOne({where: {login}});
-    if (!user) {
-      return next(ApiError.internal('Пользователь не найден'));
-    }
-    let comparePassword = bcrypt.compareSync(password, user.password);
-    if (!comparePassword) {
-      return next(ApiError.internal('Ошибка! Неправильный пароль...'));
-    }
-    const token = generateJwt(user.id, user.login, user.role);
-    return res.json({token});
   }
 
   async check(req, res, next) {
