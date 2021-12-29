@@ -1,14 +1,14 @@
-### DB
+# DB
 ***
-#### Admins
+## Admins
 
-| id  |   login   |         secret&nbsp;&nbsp;&nbsp;| 
+|&nbsp;id&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;login&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;secret&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 
 ---------------------------------------------
-|  1  | TrushelMS | Трушель Мария Сергеевна |
+|&nbsp;&nbsp;1&nbsp;&nbsp;|&nbsp;TrushelMS&nbsp;|&nbsp;Трушель Мария Сергеевна&nbsp;|
 
 
-#### Announs
+## Announs
 
-| id  |  name  |       
+|&nbsp;id&nbsp;&nbsp;|&nbsp;&nbsp;name&nbsp;&nbsp;|       
 ----------------
-|  1  | привет | 
+|&nbsp;&nbsp;1&nbsp;&nbsp;|&nbsp;привет&nbsp;| 
