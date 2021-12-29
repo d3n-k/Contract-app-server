@@ -31,7 +31,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(fileUpload({}));
 app.use("/api", router);
-//app.use("/static", express.static(__dirname + "/public"));
 app.use(errorHandler);
 
 
