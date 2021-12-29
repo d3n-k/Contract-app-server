@@ -2,7 +2,7 @@
 ***
 #### Admins
 
-| id  |   login   |         secret          | 
+| id  |   login   |         secret&nbsp;&nbsp;&nbsp;| 
 ---------------------------------------------
 |  1  | TrushelMS | Трушель Мария Сергеевна |
 
