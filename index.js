@@ -31,9 +31,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(fileUpload({}));
 app.use("/api", router);
+app.use(express.static(path.join(__dirname, 'build')));
 app.use(errorHandler);
 
-
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 
 // договор1
