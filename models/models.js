@@ -40,7 +40,7 @@ const Admin = sequelize.define('admin', {
 const Course = sequelize.define('course', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     number: {type: DataTypes.INTEGER, unique:true},
-    name: {type: DataTypes.STRING(500), unique:true},
+    name: {type: DataTypes.STRING(500)},
     price: {type: DataTypes.STRING},
     date: {type: DataTypes.STRING},
 })
@@ -48,7 +48,7 @@ const Course = sequelize.define('course', {
 const Cathedra = sequelize.define('cathedra', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, allowNull:false},
-    zav_name: {type: DataTypes.STRING, unique:true, allowNull:false},
+    zav_name: {type: DataTypes.STRING, unique:true},
     address: {type: DataTypes.STRING},
     telephone: {type: DataTypes.STRING, unique: true},
 })

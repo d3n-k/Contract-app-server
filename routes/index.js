@@ -9,6 +9,7 @@ const announceRouter = require('./announceRouter');
 const fileRouter = require('./fileRouter');
 const file2Router = require('./file2Router');
 const file3Router = require('./file3Router');
+const allCourseRouter = require('./allCourseRouter');
 
 router.use('/user', userRouter);
 router.use('/admin', adminRouter);
@@ -19,7 +20,7 @@ router.use('/announce', announceRouter);
 router.use('/files', fileRouter);
 router.use('/files2', file2Router);
 router.use('/files3', file3Router);
-
+router.use('/allCourses', allCourseRouter);
 
 
 module.exports = router;
