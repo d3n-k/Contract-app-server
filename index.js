@@ -41,7 +41,7 @@ app.get('/', function (req, res) {
 
 // договор1
 
-app.post("/create-pdf1", (req, res) => {
+app.post("/api/create-pdf1", (req, res) => {
   console.log(req.body);
 
   const data = req.body;
@@ -63,21 +63,21 @@ app.post("/create-pdf1", (req, res) => {
   
 });
 
-app.get("/contract1", (req, res) => {
+app.get("/api/contract1", (req, res) => {
   res.sendFile(`${__dirname}/result.pdf`);
 });
 
 // шаблоны
 
-app.get("/download", (req, res) => {
+app.get("/api/download", (req, res) => {
   res.sendFile(`${__dirname}/files/contract.odt`);
 });
 
-app.get("/download2", (req, res) => {
+app.get("/api/download2", (req, res) => {
   res.sendFile(`${__dirname}/files2/contract2.odt`);
 });
 
-app.get("/download3", (req, res) => {
+app.get("/api/download3", (req, res) => {
   res.sendFile(`${__dirname}/files3/contract3.odt`);
 });
 
@@ -85,7 +85,7 @@ app.get("/download3", (req, res) => {
 ////////////////////////////////
 // docx 1
 
-app.post("/create-docx", (req, res) => {
+app.post("/api/create-docx", (req, res) => {
   const obj = req.body;
   
   const {cath, address, cus, firstNum, firstNaprav, colNaprav, telephone, cour, date} = obj;
@@ -129,14 +129,14 @@ res.send(Promise.resolve());
 });
 
 
-app.get("/docx", (req, res) => {
+app.get("/api/docx", (req, res) => {
   res.sendFile(`${__dirname}/res.docx`);
 });
 
 
 // docx 2
 
-app.post("/create-docx2", (req, res) => {
+app.post("/api/create-docx2", (req, res) => {
   const obj = req.body;
   
   const {cath, address, cus, firstNum, firstNaprav, colNaprav, telephone, cour, date, price} = obj;
@@ -180,14 +180,14 @@ res.send(Promise.resolve());
 });
 
 
-app.get("/docx2", (req, res) => {
+app.get("/api/docx2", (req, res) => {
   res.sendFile(`${__dirname}/res_plat.docx`);
 });
 
 
 // docx 3
 
-app.post("/create-docx3", (req, res) => {
+app.post("/api/create-docx3", (req, res) => {
   const obj = req.body;
   
   const {cath, address, cus, firstNum, firstNaprav, colNaprav, telephone, cour, date, price} = obj;
@@ -231,13 +231,13 @@ res.send(Promise.resolve());
 });
 
 
-app.get("/docx3", (req, res) => {
+app.get("/api/docx3", (req, res) => {
   res.sendFile(`${__dirname}/res_yr.docx`);
 });
 
 //contract2
 
-app.post("/create-pdf2", (req, res) => {
+app.post("/api/create-pdf2", (req, res) => {
   const obj = req.body;
   
   let text = rubles(obj.price);
@@ -266,7 +266,7 @@ app.post("/create-pdf2", (req, res) => {
   
 });
 
-app.get("/contract2", (req, res) => {
+app.get("/api/contract2", (req, res) => {
   res.sendFile(`${__dirname}/result2.pdf`);
 });
 
@@ -274,7 +274,7 @@ app.get("/contract2", (req, res) => {
 
 //contract3
 
-app.post("/create-pdf3", (req, res) => {
+app.post("/api/create-pdf3", (req, res) => {
   
   let obj = req.body;
   let text = rubles(obj.price);
@@ -305,7 +305,7 @@ app.post("/create-pdf3", (req, res) => {
   
 });
 
-app.get("/contract3", (req, res) => {
+app.get("/api/contract3", (req, res) => {
   res.sendFile(`${__dirname}/result3.pdf`);
 });
 
