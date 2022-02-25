@@ -19,9 +19,9 @@ module.exports.splitPrice = function (price, textPrice) {
   }
 };
 
-module.exports.splitDate = function (date) {
-  if (date == "___.___.2022 по ___.___.2022") {
-    return " ___ _________ 2022 года.";
+module.exports.splitDate = function (date, year) {
+  if (date == `___.___.${year} по ___.___.${year}`) {
+    return ` ___ _________ ${year} года.`;
   }
   let dates = date.split("по");
   let lastDate = dates[1];
@@ -29,3 +29,4 @@ module.exports.splitDate = function (date) {
   let newDate = moment(lastDate, "DD.MM.YYYY").format("LL");
   return newDate;
 };
+

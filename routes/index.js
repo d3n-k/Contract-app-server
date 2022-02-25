@@ -10,6 +10,14 @@ const fileRouter = require('./fileRouter');
 const file2Router = require('./file2Router');
 const file3Router = require('./file3Router');
 const allCourseRouter = require('./allCourseRouter');
+const yearRouter = require('./yearRouter');
+const contractRouter = require('./contractRouter');
+const journalRouter = require('./journalRouter');
+const docFile1Router = require('./docFile1Router');
+const docFile2Router = require('./docFile2Router');
+const docFile3Router = require('./docFile3Router');
+const docFile4Router = require('./docFile4Router');
+const docFile5Router = require('./docFile5Router');
 
 router.use('/user', userRouter);
 router.use('/admin', adminRouter);
@@ -21,6 +29,14 @@ router.use('/files', fileRouter);
 router.use('/files2', file2Router);
 router.use('/files3', file3Router);
 router.use('/allCourses', allCourseRouter);
+router.use('/year', yearRouter);
+router.use('/contract', contractRouter);
+router.use('/journal', journalRouter);
+router.use('/docFile1', docFile1Router);
+router.use('/docFile2', docFile2Router);
+router.use('/docFile3', docFile3Router);
+router.use('/docFile4', docFile4Router);
+router.use('/docFile5', docFile5Router);
 
 
 module.exports = router;

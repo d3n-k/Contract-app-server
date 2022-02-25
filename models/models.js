@@ -7,30 +7,6 @@ const User = sequelize.define('user', {
     role: {type: DataTypes.STRING, defaultValue: 'USER'},
 })
 
-const Contract_free = sequelize.define('contract_free', {
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    serial_number: {type: DataTypes.INTEGER},
-    direction_number: {type: DataTypes.INTEGER, unique: true},
-    full_name: {type: DataTypes.STRING, allowNull: false},
-    address: {type: DataTypes.STRING, allowNull:false},
-})
-
-const Contract_pay = sequelize.define('contract_pay', {
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    serial_number: {type: DataTypes.INTEGER},
-    direction_number: {type: DataTypes.INTEGER, unique: true},
-    full_name: {type: DataTypes.STRING, allowNull:false},
-    address: {type: DataTypes.STRING, allowNull:false},
-})
-
-const Contract_for_organ = sequelize.define('contract_for_organ', {
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    serial_number: {type: DataTypes.INTEGER},
-    direction_number: {type: DataTypes.INTEGER, unique: true},
-    full_name: {type: DataTypes.STRING, allowNull:false},
-    address: {type: DataTypes.STRING, allowNull:false},
-})
-
 const Admin = sequelize.define('admin', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     login: {type: DataTypes.STRING, unique:true},
@@ -63,6 +39,11 @@ const Announ = sequelize.define('announ', {
     name: {type: DataTypes.STRING(2000)},
 })
 
+const Year = sequelize.define('year', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    name: {type: DataTypes.STRING},
+})
+
 const File = sequelize.define('file', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     file: {type: DataTypes.STRING},
@@ -78,22 +59,56 @@ const File3 = sequelize.define('file3', {
     file: {type: DataTypes.STRING},
 })
 
+const DocFile1 = sequelize.define('docFile1', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    file: {type: DataTypes.STRING},
+})
+
+const DocFile2 = sequelize.define('docFile2', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    file: {type: DataTypes.STRING},
+})
+
+const DocFile3 = sequelize.define('docFile3', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    file: {type: DataTypes.STRING},
+})
+
+const DocFile4 = sequelize.define('docFile4', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    file: {type: DataTypes.STRING},
+})
+
+const DocFile5 = sequelize.define('docFile5', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    file: {type: DataTypes.STRING},
+})
+
+const Contract = sequelize.define('contract', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    fullname: {type: DataTypes.STRING, unique:true},
+})
+
+const Journal = sequelize.define('journal', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    organ: {type: DataTypes.STRING, allowNull: false},
+    colvo: {type: DataTypes.INTEGER, allowNull: false},
+    numbers: {type: DataTypes.STRING, allowNull: false},
+})
 
 
-User.hasOne(Contract_free);
-Contract_free.belongsTo(User);
-
-User.hasOne(Contract_pay);
-Contract_pay.belongsTo(User);
-
-User.hasOne(Contract_for_organ);
-Contract_for_organ.belongsTo(User);
 
 User.hasOne(Admin);
 Admin.belongsTo(User);
 
 Admin.hasMany(Course);
 Course.belongsTo(Admin);
+
+Course.hasMany(Contract);
+Contract.belongsTo(Course);
+
+Course.hasMany(Journal);
+Journal.belongsTo(Course);
 
 Admin.hasMany(Customer);
 Customer.belongsTo(Admin);
@@ -104,6 +119,9 @@ Cathedra.belongsTo(Admin);
 Admin.hasOne(Announ);
 Announ.belongsTo(Admin);
 
+Admin.hasOne(Year);
+Year.belongsTo(Admin);
+
 Admin.hasMany(File);
 File.belongsTo(Admin);
 
@@ -113,19 +131,39 @@ File2.belongsTo(Admin);
 Admin.hasMany(File3);
 File3.belongsTo(Admin);
 
+Admin.hasMany(DocFile1);
+DocFile1.belongsTo(Admin);
+
+Admin.hasMany(DocFile2);
+DocFile2.belongsTo(Admin);
+
+Admin.hasMany(DocFile3);
+DocFile3.belongsTo(Admin);
+
+Admin.hasMany(DocFile4);
+DocFile4.belongsTo(Admin);
+
+Admin.hasMany(DocFile5);
+DocFile5.belongsTo(Admin);
+
 module.exports = {
     User,
     Admin,
     Course,
     Cathedra,
     Customer,
-    Contract_free,
-    Contract_pay,
-    Contract_for_organ,
     Announ,
     File,
     File2,
-    File3
+    File3,
+    Year,
+    Contract,
+    Journal,
+    DocFile1,
+    DocFile2,
+    DocFile3,
+    DocFile4,
+    DocFile5
 }
 
 
