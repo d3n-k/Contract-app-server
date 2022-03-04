@@ -31,7 +31,7 @@ const Cathedra = sequelize.define('cathedra', {
 
 const Customer = sequelize.define('customer', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    name: {type: DataTypes.STRING, allowNull: false},
+    name: {type: DataTypes.STRING, allowNull: false, unique: true},
 })
 
 const Announ = sequelize.define('announ', {

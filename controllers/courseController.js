@@ -18,7 +18,11 @@ class CourseController {
         page = page || 1;
         limit = limit || 20;
         let offset = page * limit - limit;
-        const courses = await Course.findAndCountAll({limit, offset});
+        const courses = await Course.findAndCountAll({limit, offset, 
+            order: [
+                ['number']
+            ]
+        });
         return res.json(courses);
     }
 
