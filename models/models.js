@@ -87,6 +87,7 @@ const DocFile5 = sequelize.define('docFile5', {
 const Contract = sequelize.define('contract', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     fullname: {type: DataTypes.STRING, unique:true},
+    naprav: {type: DataTypes.STRING(50)},
 })
 
 const Journal = sequelize.define('journal', {

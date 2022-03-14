@@ -4,8 +4,8 @@ const ApiError = require('../error/ApiError');
 class ContractController {
     async create(req, res, next) {
         try {
-            const {fullname, courseId} = req.body;
-            const contract = await Contract.create({fullname, courseId});
+            const {fullname, courseId, naprav} = req.body;
+            const contract = await Contract.create({fullname, courseId, naprav});
             return res.json(contract);
         } catch(e) {
             next(ApiError.badRequest(e.message));
@@ -17,7 +17,10 @@ class ContractController {
       try {
         const {courseId} = req.body;
         const contracts = await Contract.findAll({
-            where: { courseId: courseId }
+            where: { courseId: courseId },
+            order: [
+                ['fullname']
+            ]
           });
         return res.json(contracts);
       } catch(e) {
