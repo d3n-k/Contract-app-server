@@ -101,6 +101,18 @@ app.get("/api/downloadDoc5", (req, res) => {
   res.sendFile(`${__dirname}/dogovor5.docx`);
 });
 
+app.get("/api/downloadNaprav1", (req, res) => {
+  res.sendFile(`${__dirname}/res1.docx`);
+});
+
+app.get("/api/downloadNaprav2", (req, res) => {
+  res.sendFile(`${__dirname}/data.docx`);
+});
+
+app.get("/api/downloadNaprav3", (req, res) => {
+  res.sendFile(`${__dirname}/data3.docx`);
+});
+
 ////////////////////////////////
 // docx 1
 

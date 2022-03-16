@@ -84,6 +84,21 @@ const DocFile5 = sequelize.define('docFile5', {
     file: {type: DataTypes.STRING},
 })
 
+const NapravFile1 = sequelize.define('napravFile1', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    file: {type: DataTypes.STRING},
+})
+
+const NapravFile2 = sequelize.define('napravFile2', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    file: {type: DataTypes.STRING},
+})
+
+const NapravFile3 = sequelize.define('napravFile3', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    file: {type: DataTypes.STRING},
+})
+
 const Contract = sequelize.define('contract', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     fullname: {type: DataTypes.STRING, unique:true},
@@ -147,6 +162,15 @@ DocFile4.belongsTo(Admin);
 Admin.hasMany(DocFile5);
 DocFile5.belongsTo(Admin);
 
+Admin.hasMany(NapravFile1);
+NapravFile1.belongsTo(Admin);
+
+Admin.hasMany(NapravFile2);
+NapravFile2.belongsTo(Admin);
+
+Admin.hasMany(NapravFile3);
+NapravFile3.belongsTo(Admin);
+
 module.exports = {
     User,
     Admin,
@@ -164,7 +188,10 @@ module.exports = {
     DocFile2,
     DocFile3,
     DocFile4,
-    DocFile5
+    DocFile5,
+    NapravFile1,
+    NapravFile2,
+    NapravFile3
 }
 
 

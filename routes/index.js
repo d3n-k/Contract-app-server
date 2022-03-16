@@ -18,6 +18,9 @@ const docFile2Router = require('./docFile2Router');
 const docFile3Router = require('./docFile3Router');
 const docFile4Router = require('./docFile4Router');
 const docFile5Router = require('./docFile5Router');
+const napravFile1Router = require('./napravFile1Router');
+const napravFile2Router = require('./napravFile2Router');
+const napravFile3Router = require('./napravFile3Router');
 
 router.use('/user', userRouter);
 router.use('/admin', adminRouter);
@@ -37,6 +40,9 @@ router.use('/docFile2', docFile2Router);
 router.use('/docFile3', docFile3Router);
 router.use('/docFile4', docFile4Router);
 router.use('/docFile5', docFile5Router);
+router.use('/naprav1', napravFile1Router);
+router.use('/naprav2', napravFile2Router);
+router.use('/naprav3', napravFile3Router);
 
 
 module.exports = router;
