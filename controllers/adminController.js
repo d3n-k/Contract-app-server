@@ -2,15 +2,15 @@ const ApiError = require("../error/ApiError");
 const { Admin } = require("../models/models");
 const ActiveDirectory = require("activedirectory");
 const config = {
-  url: "ldap://172.20.0.71",
-  baseDN: "OU=Users,OU=University,dc=bsmu,dc=by",
-  username: "webapps@bsmu.by",
-  password: "!QAZ2wsx",
+  url: process.env.USERS_BASE_URL,
+  baseDN: process.env.USERS_BASE_DN,
+  username: process.env.DEFAULT_USERNAME,
+  password: process.env.DEFAULT_PASSWORD,
 };
 
 async function admi(login, secret, res) {
-    const admin = await Admin.create({ login, secret});
-    return res.json(admin);
+  const admin = await Admin.create({ login, secret });
+  return res.json(admin);
 }
 
 class AdminController {
@@ -19,9 +19,9 @@ class AdminController {
       const { login, secret } = req.body;
 
       const candidate = await Admin.findOne({ where: { login } });
-     if (candidate) {
-      return next(ApiError.badRequest("Пользователь с таким логином уже существует"));
-    }
+      if (candidate) {
+        return next(ApiError.badRequest("Пользователь с таким логином уже существует"));
+      }
 
       const sAMAccountName = login;
 
@@ -35,11 +35,11 @@ class AdminController {
         if (!user) {
           console.log("User: " + sAMAccountName + " not found.");
           return next(ApiError.badRequest("User: " + sAMAccountName + " not found."));
-        } 
+        }
         else {
-            console.log(JSON.stringify(user.cn));
-            const sec = user.cn;
-            admi(login, sec, res);
+          console.log(JSON.stringify(user.cn));
+          const sec = user.cn;
+          admi(login, sec, res);
         }
       });
 

@@ -8,6 +8,7 @@ router.get('/', courseController.getAll);
 router.delete('/:id', checkRole('ADMIN'), courseController.delete);
 router.put('/:id', checkRole('ADMIN'), courseController.update);
 router.get('/:id', courseController.getOne);
+router.get('/num/:number', courseController.getByNumber);
 
 
 module.exports = router;
