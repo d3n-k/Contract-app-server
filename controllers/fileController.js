@@ -7,7 +7,7 @@ class FileController {
     async create(req, res, next) {
         try {
             const {file} = req.files;
-            let fileName = 'contract' + ".odt";
+            let fileName = 'contract' + ".docx";
             file.mv(path.resolve(__dirname, '..', 'files', fileName));
             const fileB = await File.create({file: fileName});
             return res.json(fileB);

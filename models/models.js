@@ -3,7 +3,7 @@ const {DataTypes} = require('sequelize');
 
 const User = sequelize.define('user', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    login: {type: DataTypes.STRING, unique: true,},
+    login: {type: DataTypes.STRING, unique: true},
     role: {type: DataTypes.STRING, defaultValue: 'USER'},
 })
 
@@ -19,6 +19,13 @@ const Course = sequelize.define('course', {
     name: {type: DataTypes.STRING(500)},
     price: {type: DataTypes.STRING},
     date: {type: DataTypes.STRING},
+    type: {type: DataTypes.INTEGER, unique:false}
+})
+
+const CourseType = sequelize.define('courseType', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    name: {type: DataTypes.STRING, allowNull:false},
+    name_r: {type: DataTypes.STRING, allowNull:false}
 })
 
 const Cathedra = sequelize.define('cathedra', {
@@ -175,6 +182,7 @@ module.exports = {
     User,
     Admin,
     Course,
+    CourseType,
     Cathedra,
     Customer,
     Announ,

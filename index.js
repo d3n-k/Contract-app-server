@@ -14,10 +14,7 @@ const rubles = require("rubles").rubles;
 const functions = require("./functions");
 const carbone = require('carbone');
 const fileUpload = require('express-fileupload');
-const PizZip = require("pizzip");
-const Docxtemplater = require("docxtemplater");
 const moment = require("moment");
-
 
 
 const PORT = process.env.PORT || 5000;
@@ -47,38 +44,39 @@ app.post("/api/create-pdf1", (req, res) => {
   const data = req.body;
 
   var options = {
-    convertTo : 'pdf' 
+    convertTo: 'pdf'
   };
 
-  carbone.render('./files/contract.odt', data, options, function(err, result){
+  carbone.render('./files/contract.docx', data, options, function (err, result) {
     if (err) {
       res.send(Promise.reject());
       console.log(err);
-      
+
     }
     fs.writeFileSync('result.pdf', result);
     res.send(Promise.resolve());
-    
+
   });
-  
+
 });
 
 app.get("/api/contract1", (req, res) => {
+  console.log("get contract pdf");
   res.sendFile(`${__dirname}/result.pdf`);
 });
 
 // шаблоны
 
 app.get("/api/download", (req, res) => {
-  res.sendFile(`${__dirname}/files/contract.odt`);
+  res.sendFile(`${__dirname}/files/contract.docx`);
 });
 
 app.get("/api/download2", (req, res) => {
-  res.sendFile(`${__dirname}/files2/contract2.odt`);
+  res.sendFile(`${__dirname}/files2/contract2.docx`);
 });
 
 app.get("/api/download3", (req, res) => {
-  res.sendFile(`${__dirname}/files3/contract3.odt`);
+  res.sendFile(`${__dirname}/files3/contract3.docx`);
 });
 
 app.get("/api/downloadDoc1", (req, res) => {
@@ -118,10 +116,12 @@ app.get("/api/downloadNaprav3", (req, res) => {
 
 app.post("/api/create-docx", (req, res) => {
   const obj = req.body;
-  
-  const {cath, address, cus, firstNum, firstNaprav, colNaprav, telephone, cour, date, year} = obj;
 
-  
+  console.log(obj);
+
+  const { cath, address, cus, firstNum, firstNaprav, colNaprav, telephone, cour, date, year } = obj;
+
+
   let arr = [];
   const time = moment().format('DD.MM.YYYY');
 
@@ -133,38 +133,25 @@ app.post("/api/create-docx", (req, res) => {
 
   for (let i = 0; i < colNaprav; i++) {
     let val = Number(firstNaprav);
-    arr.push({num: `${val + i}`});
+    arr.push({ num: `${val + i}` });
   }
 
-
-  const content = fs.readFileSync(
-    path.resolve(__dirname, "res1.docx"),
-    "binary"
- );
-
- const zip = new PizZip(content);
-
-  const doc = new Docxtemplater(zip, {
-    paragraphLoop: true,
-    linebreaks: true,
-  });
-
-  doc.render({
-    userGreeting: (scope) => {
-        return scope.num;
-    },
+  const data = {
     ...obj,
     arr: arr,
     time: time,
     ifYear: ifYear
-});
+  }
 
-const buf = doc.getZip().generate({ type: "nodebuffer" });
+  carbone.render('res1.docx', data, {}, function (err, result) {
+    if (err) {
+      res.send(Promise.reject());
+      console.log(err);
+    }
+    fs.writeFileSync('res.docx', result);
+    res.send(Promise.resolve());
 
-fs.writeFileSync(path.resolve(__dirname, `res.docx`), buf);
-
-res.send(Promise.resolve());
-
+  });
 });
 
 
@@ -177,9 +164,11 @@ app.get("/api/docx", (req, res) => {
 
 app.post("/api/create-docx2", (req, res) => {
   const obj = req.body;
-  
-  const {cath, address, cus, firstNum, firstNaprav, colNaprav, telephone, cour, date, price, year} = obj;
-  
+
+  console.log(obj);
+
+  const { cath, address, cus, firstNum, firstNaprav, colNaprav, telephone, cour, date, price, year } = obj;
+
   let arr = [];
   const time = moment().format('DD.MM.YYYY');
   let ifYear = '';
@@ -191,38 +180,25 @@ app.post("/api/create-docx2", (req, res) => {
 
   for (let i = 0; i < colNaprav; i++) {
     let val = Number(firstNaprav);
-    arr.push({num: `${val + i}`});
+    arr.push({ num: `${val + i}` });
   }
 
-
-  const content = fs.readFileSync(
-    path.resolve(__dirname, "data.docx"),
-    "binary"
- );
-
- const zip = new PizZip(content);
-
-  const doc = new Docxtemplater(zip, {
-    paragraphLoop: true,
-    linebreaks: true,
-  });
-
-  doc.render({
-    userGreeting: (scope) => {
-        return scope.num;
-    },
+  const data = {
     ...obj,
     arr: arr,
     time: time,
-    ifYear: ifYear,
-});
+    ifYear: ifYear
+  }
 
-const buf = doc.getZip().generate({ type: "nodebuffer" });
+  carbone.render('data.docx', data, {}, function (err, result) {
+    if (err) {
+      res.send(Promise.reject());
+      console.log(err);
+    }
+    fs.writeFileSync('res_plat.docx', result);
+    res.send(Promise.resolve());
 
-fs.writeFileSync(path.resolve(__dirname, `res_plat.docx`), buf);
-
-res.send(Promise.resolve());
-
+  });
 });
 
 
@@ -235,9 +211,11 @@ app.get("/api/docx2", (req, res) => {
 
 app.post("/api/create-docx3", (req, res) => {
   const obj = req.body;
-  
-  const {cath, address, cus, firstNum, firstNaprav, colNaprav, telephone, cour, date, price, year} = obj;
-  
+
+  console.log(obj);
+
+  const { cath, address, cus, firstNum, firstNaprav, colNaprav, telephone, cour, date, price, year } = obj;
+
   let arr = [];
   const time = moment().format('DD.MM.YYYY');
   let ifYear = '';
@@ -249,38 +227,25 @@ app.post("/api/create-docx3", (req, res) => {
 
   for (let i = 0; i < colNaprav; i++) {
     let val = Number(firstNaprav);
-    arr.push({num: `${val + i}`});
+    arr.push({ num: `${val + i}` });
   }
 
-
-  const content = fs.readFileSync(
-    path.resolve(__dirname, "data3.docx"),
-    "binary"
- );
-
- const zip = new PizZip(content);
-
-  const doc = new Docxtemplater(zip, {
-    paragraphLoop: true,
-    linebreaks: true,
-  });
-
-  doc.render({
-    userGreeting: (scope) => {
-        return scope.num;
-    },
+  const data = {
     ...obj,
     arr: arr,
     time: time,
-    ifYear: ifYear,
-});
+    ifYear: ifYear
+  }
 
-const buf = doc.getZip().generate({ type: "nodebuffer" });
+  carbone.render('data3.docx', data, {}, function (err, result) {
+    if (err) {
+      res.send(Promise.reject());
+      console.log(err);
+    }
+    fs.writeFileSync('res_yr.docx', result);
+    res.send(Promise.resolve());
 
-fs.writeFileSync(path.resolve(__dirname, `res_yr.docx`), buf);
-
-res.send(Promise.resolve());
-
+  });
 });
 
 
@@ -292,7 +257,7 @@ app.get("/api/docx3", (req, res) => {
 
 app.post("/api/create-pdf2", (req, res) => {
   const obj = req.body;
-  
+
   let text = rubles(obj.price);
   let price = functions.splitPrice(obj.price, text);
   let lastDate = functions.splitDate(obj.date, obj.year);
@@ -304,19 +269,19 @@ app.post("/api/create-pdf2", (req, res) => {
   console.log(data);
 
   var options = {
-    convertTo : 'pdf' 
+    convertTo: 'pdf'
   };
 
-  carbone.render('./files2/contract2.odt', data, options, function(err, result){
+  carbone.render('./files2/contract2.docx', data, options, function (err, result) {
     if (err) {
       res.send(Promise.reject());
       console.log(err);
     }
     fs.writeFileSync('result2.pdf', result);
     res.send(Promise.resolve());
-    
+
   });
-  
+
 });
 
 app.get("/api/contract2", (req, res) => {
@@ -328,7 +293,7 @@ app.get("/api/contract2", (req, res) => {
 //contract3
 
 app.post("/api/create-pdf3", (req, res) => {
-  
+
   let obj = req.body;
   let text = rubles(obj.price);
   let price = functions.splitPrice(obj.price, text);
@@ -341,21 +306,20 @@ app.post("/api/create-pdf3", (req, res) => {
 
   console.log(data);
 
-
   var options = {
-    convertTo : 'pdf' 
+    convertTo: 'pdf'
   };
 
-  carbone.render('./files3/contract3.odt', data, options, function(err, result){
+  carbone.render('./files3/contract3.docx', data, options, function (err, result) {
     if (err) {
       res.send(Promise.reject());
       console.log(err);
     }
     fs.writeFileSync('result3.pdf', result);
     res.send(Promise.resolve());
-    
+
   });
-  
+
 });
 
 app.get("/api/contract3", (req, res) => {
@@ -367,57 +331,19 @@ app.get("/api/contract3", (req, res) => {
 
 app.post("/api/create-dogovor1", (req, res) => {
   const obj = req.body;
-  
-  const {arr} = obj;
 
-  const content = fs.readFileSync(
-    path.resolve(__dirname, "dogovor1.docx"),
-    "binary"
- );
+  console.log(obj);
+  const { arr } = obj;
 
- const zip = new PizZip(content);
+  carbone.render('dogovor1test.docx', obj, {}, function (err, result) {
+    if (err) {
+      res.send(Promise.reject());
+      console.log(err);
+    }
+    fs.writeFileSync('resDogovor1.docx', result);
+    res.send(Promise.resolve());
 
-  const doc = new Docxtemplater(zip, {
-    paragraphLoop: true,
-    linebreaks: true,
   });
-
-
-  doc.render({
-    courseNum: (scope) => {
-        return scope.num;
-    },
-    courseName: (scope) => {
-      return scope.name;
-    },
-    courseFirstDate: (scope) => {
-      return scope.firstDate;
-    },
-    courseUsers: (scope) => {
-      let resUsers = '';
-      for (let i = 0; i < scope.users.length; i++) {
-        resUsers += scope.users[i] + '\n';
-      }
-      return resUsers;
-    },
-    courseCath: (scope) => {
-      return scope.cath;
-    },
-    courseDate: (scope) => {
-      return scope.date;
-    },
-    courseCathName: (scope) => {
-      return scope.cathName;
-    },
-    arr: arr,
-});
-
-const buf = doc.getZip().generate({ type: "nodebuffer" });
-
-fs.writeFileSync(path.resolve(__dirname, `resDogovor1.docx`), buf);
-
-res.send(Promise.resolve());
-
 });
 
 
@@ -431,48 +357,19 @@ app.get("/api/create-dogovor1", (req, res) => {
 
 app.post("/api/create-dogovor2", (req, res) => {
   const obj = req.body;
-  
-  const {arr} = obj;
 
-  const content = fs.readFileSync(
-    path.resolve(__dirname, "dogovor2.docx"),
-    "binary"
- );
+  console.log(obj);
+  const { arr } = obj;
 
- const zip = new PizZip(content);
+  carbone.render('dogovor2test.docx', obj, {}, function (err, result) {
+    if (err) {
+      res.send(Promise.reject());
+      console.log(err);
+    }
+    fs.writeFileSync('resDogovor2.docx', result);
+    res.send(Promise.resolve());
 
-  const doc = new Docxtemplater(zip, {
-    paragraphLoop: true,
-    linebreaks: true,
   });
-
-
-  doc.render({
-    courseNum: (scope) => {
-        return scope.num;
-    },
-    courseName: (scope) => {
-      return scope.name;
-    },
-    courseLastDate: (scope) => {
-      return scope.lastDate;
-    },
-    courseUsers: (scope) => {
-      let resUsers = '';
-      for (let i = 0; i < scope.users.length; i++) {
-        resUsers += scope.users[i] + '\n';
-      }
-      return resUsers;
-    },
-    arr: arr,
-});
-
-const buf = doc.getZip().generate({ type: "nodebuffer" });
-
-fs.writeFileSync(path.resolve(__dirname, `resDogovor2.docx`), buf);
-
-res.send(Promise.resolve());
-
 });
 
 
@@ -485,45 +382,19 @@ app.get("/api/create-dogovor2", (req, res) => {
 
 app.post("/api/create-dogovor3", (req, res) => {
   const obj = req.body;
-  
-  const {arr, manyCath} = obj;
 
-  const content = fs.readFileSync(
-    path.resolve(__dirname, "dogovor3.docx"),
-    "binary"
- );
+  console.log(obj);
+  const { arr } = obj;
 
- const zip = new PizZip(content);
+  carbone.render('dogovor3test.docx', obj, {}, function (err, result) {
+    if (err) {
+      res.send(Promise.reject());
+      console.log(err);
+    }
+    fs.writeFileSync('resDogovor3.docx', result);
+    res.send(Promise.resolve());
 
-  const doc = new Docxtemplater(zip, {
-    paragraphLoop: true,
-    linebreaks: true,
   });
-
-
-  doc.render({
-    courseNum: (scope) => {
-        return scope.num;
-    },
-    courseName: (scope) => {
-      return scope.name;
-    },
-    courseLastDate: (scope) => {
-      return scope.lastDate;
-    },
-    courseCath: (scope) => {
-      return scope.cath;
-    },
-    manyCath: manyCath,
-    arr: arr,
-});
-
-const buf = doc.getZip().generate({ type: "nodebuffer" });
-
-fs.writeFileSync(path.resolve(__dirname, `resDogovor3.docx`), buf);
-
-res.send(Promise.resolve());
-
 });
 
 
@@ -536,38 +407,19 @@ app.get("/api/create-dogovor3", (req, res) => {
 
 app.post("/api/create-dogovor4", (req, res) => {
   const obj = req.body;
-  
-  const {arr, num, name, lastDate} = obj;
 
-  const content = fs.readFileSync(
-    path.resolve(__dirname, "dogovor4.docx"),
-    "binary"
- );
+  console.log(obj);
+  const { arr } = obj;
 
- const zip = new PizZip(content);
+  carbone.render('dogovor4test.docx', obj, {}, function (err, result) {
+    if (err) {
+      res.send(Promise.reject());
+      console.log(err);
+    }
+    fs.writeFileSync('resDogovor4.docx', result);
+    res.send(Promise.resolve());
 
-  const doc = new Docxtemplater(zip, {
-    paragraphLoop: true,
-    linebreaks: true,
   });
-
-
-  doc.render({
-    courseUsers: (scope) => {
-        return scope.fullname;
-    },
-    num: num,
-    name: name,
-    lastDate: lastDate,
-    arr: arr,
-});
-
-const buf = doc.getZip().generate({ type: "nodebuffer" });
-
-fs.writeFileSync(path.resolve(__dirname, `resDogovor4.docx`), buf);
-
-res.send(Promise.resolve());
-
 });
 
 
@@ -575,49 +427,23 @@ app.get("/api/create-dogovor4", (req, res) => {
   res.sendFile(`${__dirname}/resDogovor4.docx`);
 });
 
-
 // Журнал направлений 
 
 app.post("/api/create-dogovor5", (req, res) => {
   const obj = req.body;
-  
-  const {arr, num, name, date} = obj;
 
-  const content = fs.readFileSync(
-    path.resolve(__dirname, "dogovor5.docx"),
-    "binary"
- );
+  console.log(obj);
+  const { arr } = obj;
 
- const zip = new PizZip(content);
+  carbone.render('dogovor5test.docx', obj, {}, function (err, result) {
+    if (err) {
+      res.send(Promise.reject());
+      console.log(err);
+    }
+    fs.writeFileSync('resDogovor5.docx', result);
+    res.send(Promise.resolve());
 
-  const doc = new Docxtemplater(zip, {
-    paragraphLoop: true,
-    linebreaks: true,
   });
-
-
-  doc.render({
-    courseOrgans: (scope) => {
-        return scope.organ;
-    },
-    courseColvo: (scope) => {
-      return scope.colvo;
-  },
-  courseNum: (scope) => {
-    return scope.numbers;
-},
-    num: num,
-    name: name,
-    date: date,
-    arr: arr,
-});
-
-const buf = doc.getZip().generate({ type: "nodebuffer" });
-
-fs.writeFileSync(path.resolve(__dirname, `resDogovor5.docx`), buf);
-
-res.send(Promise.resolve());
-
 });
 
 
@@ -631,8 +457,8 @@ const start = async () => {
   try {
     await sequelize.authenticate();
     await sequelize.sync();
-    app.listen(PORT, 
-      '127.0.0.1', 
+    app.listen(PORT,
+      '127.0.0.1',
       () => console.log(`Server started on port ${PORT}`));
   } catch (e) {
     console.log(e);
