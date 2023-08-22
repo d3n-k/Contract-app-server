@@ -13,17 +13,17 @@ const config = {
 
 async function createAdm(login, role, res) {
   const candidate = await User.findOne({ where: { login } });
-     if (candidate) {
-      console.log("Authenticated!");
-      const token = generateJwt(candidate.id, candidate.login, candidate.role);
-      return res.json({ token });
-     } else {
-      console.log("Authenticated!");
-      const user = await User.create({ login, role });
-      const token = generateJwt(user.id, user.login, user.role);
-      return res.json({ token });
-     }
- 
+  if (candidate) {
+    console.log("Authenticated!");
+    const token = generateJwt(candidate.id, candidate.login, candidate.role);
+    return res.json({ token });
+  } else {
+    console.log("Authenticated!");
+    const user = await User.create({ login, role });
+    const token = generateJwt(user.id, user.login, user.role);
+    return res.json({ token });
+  }
+
 }
 
 const generateJwt = (id, login, role) => {
@@ -56,28 +56,28 @@ class UserController {
 
   async check(req, res, next) {
     const token = generateJwt(req.user.id, req.user.login, req.user.role);
-    return res.json({token});
+    return res.json({ token });
   }
 
   async delete(req, res) {
     try {
-        const {id} = req.params;
-        if (!id) {
-            res.status(400).json({message: "Id не указан"});
-        }
-        const user = await User.destroy({
-            where: { id: id }
-          });
-        return res.json(user);
-    } catch(e) {
-        next(ApiError.badRequest(e.message));
+      const { id } = req.params;
+      if (!id) {
+        res.status(400).json({ message: "Id не указан" });
+      }
+      const user = await User.destroy({
+        where: { id: id }
+      });
+      return res.json(user);
+    } catch (e) {
+      next(ApiError.badRequest(e.message));
     }
-}
+  }
 
-async getAll(req, res) {
-  const users = await User.findAll();
-  return res.json(users);
-}
+  async getAll(req, res) {
+    const users = await User.findAll();
+    return res.json(users);
+  }
 }
 
 module.exports = new UserController();
