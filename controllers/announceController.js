@@ -6,14 +6,12 @@ class AnnounceController {
 
     async create(req, res, next) {
         try {
-            const {name} = req.body;
-            const announ = await Announ.create({name});
+            const { name } = req.body;
+            const announ = await Announ.create({ name });
             return res.json(announ);
-        } catch(e) {
+        } catch (e) {
             next(ApiError.badRequest(e.message));
         }
-
-        
     }
 
     async getAll(req, res) {
@@ -23,18 +21,17 @@ class AnnounceController {
 
     async update(req, res, next) {
         try {
-            const id = req.params.id;
             const announ = req.body;
-            if (!announ.id) {
-                res.status(400).json( {message: 'Id не указан'});
+            let announs = await Announ.findAll();
+            if (announs.length > 0) {
+                const firstId = announs[0].id;
+                const updatedPost = await Announ.update(announ, {
+                    where: { id: firstId },
+                })
+                return res.json(updatedPost);
             }
-            const updatedPost = await Announ.update(announ, {
-                where: {id: id},
-            })
-            
-            return res.json(updatedPost);
-        } catch(e) {
-            
+        } catch (e) {
+            console.log("error announce");
             next(ApiError.badRequest(e.message));
         }
     }
