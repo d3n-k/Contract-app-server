@@ -335,7 +335,7 @@ app.post("/api/create-dogovor1", (req, res) => {
   console.log(obj);
   const { arr } = obj;
 
-  carbone.render('dogovor1test.docx', obj, {}, function (err, result) {
+  carbone.render('dogovor1.docx', obj, {}, function (err, result) {
     if (err) {
       res.send(Promise.reject());
       console.log(err);
@@ -361,7 +361,7 @@ app.post("/api/create-dogovor2", (req, res) => {
   console.log(obj);
   const { arr } = obj;
 
-  carbone.render('dogovor2test.docx', obj, {}, function (err, result) {
+  carbone.render('dogovor2.docx', obj, {}, function (err, result) {
     if (err) {
       res.send(Promise.reject());
       console.log(err);
@@ -386,7 +386,7 @@ app.post("/api/create-dogovor3", (req, res) => {
   console.log(obj);
   const { arr } = obj;
 
-  carbone.render('dogovor3test.docx', obj, {}, function (err, result) {
+  carbone.render('dogovor3.docx', obj, {}, function (err, result) {
     if (err) {
       res.send(Promise.reject());
       console.log(err);
@@ -411,7 +411,7 @@ app.post("/api/create-dogovor4", (req, res) => {
   console.log(obj);
   const { arr } = obj;
 
-  carbone.render('dogovor4test.docx', obj, {}, function (err, result) {
+  carbone.render('dogovor4.docx', obj, {}, function (err, result) {
     if (err) {
       res.send(Promise.reject());
       console.log(err);
@@ -435,7 +435,7 @@ app.post("/api/create-dogovor5", (req, res) => {
   console.log(obj);
   const { arr } = obj;
 
-  carbone.render('dogovor5test.docx', obj, {}, function (err, result) {
+  carbone.render('dogovor5.docx', obj, {}, function (err, result) {
     if (err) {
       res.send(Promise.reject());
       console.log(err);
