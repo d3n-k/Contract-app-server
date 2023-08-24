@@ -22,10 +22,6 @@ class AnnounceController {
     async update(req, res, next) {
         try {
             const announ = req.body;
-            if (!announ.id) {
-                res.status(400).json({ message: 'Id не указан' });
-            }
-
             let announs = await Announ.findAll();
             if (announs.length > 0) {
                 const firstId = announs[0].id;
